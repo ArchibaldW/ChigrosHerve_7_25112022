@@ -1,0 +1,22 @@
+export function createHtmlElement (type, text) {
+  const element = document.createElement(type)
+  element.textContent = text
+  return element
+}
+
+export function createCheckbox (name, text) {
+  const element = document.createElement('div')
+  const input = document.createElement('input')
+  input.setAttribute('type', 'checkbox')
+  input.id = name
+  input.setAttribute('name', name)
+  input.setAttribute('value', text)
+  element.appendChild(input)
+
+  const label = document.createElement('label')
+  label.setAttribute('for', name)
+  label.textContent = text
+  element.appendChild(label)
+
+  return element
+}

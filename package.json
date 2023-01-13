@@ -1,0 +1,26 @@
+{
+  "name": "chigrosherve_7_25112022",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArchibaldW/ChigrosHerve_7_25112022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArchibaldW/ChigrosHerve_7_25112022/issues"
+  },
+  "homepage": "https://github.com/ArchibaldW/ChigrosHerve_7_25112022#readme",
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
