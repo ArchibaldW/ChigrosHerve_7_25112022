@@ -1,5 +1,6 @@
 import {
-  retrieveRecipes, tags
+  retrieveRecipes,
+  tags
 } from '../main.js'
 
 const TAG_TYPES = {
@@ -9,58 +10,106 @@ const TAG_TYPES = {
 }
 
 function checkTagIngredientsInRecipe (recipe) {
-  let isInRecipe = true
-  const chosenIngredients = tags.filter(tag => tag.type === TAG_TYPES.ingredients)
-  chosenIngredients.forEach(ingredient => {
-    if (!recipe.ingredients.find(element => element.ingredient === ingredient.name)) {
-      isInRecipe = false
+  const chosenIngredients = []
+
+  for (const i in tags) {
+    if (tags[i].type === TAG_TYPES.ingredients) {
+      chosenIngredients.push(tags[i])
     }
-  })
-  return isInRecipe
+  }
+
+  if (chosenIngredients.length !== 0) {
+    for (const i in chosenIngredients) {
+      for (const j in recipe.ingredients) {
+        if (recipe.ingredients[j].ingredient === chosenIngredients[i].name) {
+          return true
+        }
+      }
+    }
+  } else {
+    return true
+  }
+
+  return false
 }
 
 function checkTagApplianceInRecipe (recipe) {
-  let isInRecipe = true
-  const chosenaAppliance = tags.filter(tag => tag.type === TAG_TYPES.appliance)
-  chosenaAppliance.forEach(appliance => {
-    if (!(recipe.appliance === appliance.name)) {
-      isInRecipe = false
+  const chosenAppliance = []
+
+  for (const i in tags) {
+    if (tags[i].type === TAG_TYPES.appliance) {
+      chosenAppliance.push(tags[i])
     }
-  })
-  return isInRecipe
+  }
+
+  if (chosenAppliance.length !== 0) {
+    for (const i in chosenAppliance) {
+      if (recipe.appliance === chosenAppliance[i].name) {
+        return true
+      }
+    }
+  } else {
+    return true
+  }
+
+  return false
 }
 
 function checkTagUstensilsInRecipe (recipe) {
-  let isInRecipe = true
-  const chosenUstensils = tags.filter(tag => tag.type === TAG_TYPES.ustensils)
-  chosenUstensils.forEach(ustensils => {
-    if (!recipe.ustensils.find(element => element === ustensils.name)) {
-      isInRecipe = false
+  const chosenUstensils = []
+
+  for (const i in tags) {
+    if (tags[i].type === TAG_TYPES.ustensils) {
+      chosenUstensils.push(tags[i])
     }
-  })
-  return isInRecipe
+  }
+
+  if (chosenUstensils.length !== 0) {
+    for (const i in chosenUstensils) {
+      for (const j in recipe.ustensils) {
+        if (recipe.ustensils[j] === chosenUstensils[i].name) {
+          return true
+        }
+      }
+    }
+  } else {
+    return true
+  }
+
+  return false
 }
 
 function searchInRecipe (recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
+
   if (recipe.name.includes(searchValue) || recipe.description.includes(searchValue)) {
     isRecipeValid = true
   }
-  recipe.ingredients.forEach(ingredient => {
-    if (ingredient.ingredient.includes(searchValue)) {
+
+  for (const i in recipe.ingredients) {
+    if (recipe.ingredients[i].ingredient.includes(searchValue)) {
       isSearchInIngredients = true
+      break
     }
-  })
+  }
+
   return isRecipeValid && isSearchInIngredients
 }
 
 export async function sortMedias (searchValue) {
   const recipesData = await retrieveRecipes()
-  return recipesData.filter(recipe => {
-    return searchInRecipe(recipe, searchValue) &&
-    checkTagIngredientsInRecipe(recipe) &&
-    checkTagApplianceInRecipe(recipe) &&
-    checkTagUstensilsInRecipe(recipe)
-  })
+
+  const recipesArray = []
+
+  for (const i in recipesData) {
+    if (searchInRecipe(recipesData[i], searchValue) &&
+      checkTagIngredientsInRecipe(recipesData[i]) &&
+      checkTagApplianceInRecipe(recipesData[i]) &&
+      checkTagUstensilsInRecipe(recipesData[i])) {
+      recipesArray.push(recipesData[i])
+    }
+  }
+
+  return recipesArray
 }
