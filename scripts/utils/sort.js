@@ -97,7 +97,7 @@ function searchInRecipe(recipe, searchValue) {
   return isRecipeValid || isSearchInIngredients
 }
 
-export async function sortMedias(searchValue) {
+export function sortMedias(searchValue) {
   const recipesArray = []
 
   for (const i in recipesData) {
