@@ -1,5 +1,6 @@
 import {
-  retrieveRecipes, tags
+  recipesData,
+  tags
 } from '../main.js'
 
 const TAG_TYPES = {
@@ -44,11 +45,11 @@ function checkTagUstensilsInRecipe (recipe) {
 function searchInRecipe (recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
-  if (recipe.name.includes(searchValue) || recipe.description.includes(searchValue)) {
+  if (recipe.name.toLowerCase().includes(searchValue.toLowerCase()) || recipe.description.toLowerCase().includes(searchValue.toLowerCase())) {
     isRecipeValid = true
   }
   recipe.ingredients.forEach(ingredient => {
-    if (ingredient.ingredient.includes(searchValue)) {
+    if (ingredient.ingredient.toLowerCase().includes(searchValue.toLowerCase())) {
       isSearchInIngredients = true
     }
   })
@@ -56,7 +57,6 @@ function searchInRecipe (recipe, searchValue) {
 }
 
 export async function sortMedias (searchValue) {
-  const recipesData = await retrieveRecipes()
   return recipesData.filter(recipe => {
     return searchInRecipe(recipe, searchValue) &&
     checkTagIngredientsInRecipe(recipe) &&

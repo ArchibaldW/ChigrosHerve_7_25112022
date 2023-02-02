@@ -13,3 +13,18 @@ body{
     margin-right: 100px;
     margin-left: 100px;
 }
+
+*{
+    font-family: 'Lato', sans-serif;
+}
+
+header{
+    margin-top: 40px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+header img{
+    max-width: 268px;
+}

@@ -5,15 +5,20 @@ import { createCheckbox, createHtmlElement } from './utils/createElements.js'
 import { sortMedias } from './utils/sort.js'
 
 export let tags = []
+export let ingredientTags = []
+export let applianceTags = []
+export let ustensilTags = []
+export let recipesData = []
 
 function initNewChosenTag (checkbox, type) {
   const searchBar = document.getElementById('search_bar')
   const newTag = createHtmlElement('button', checkbox.value)
-  newTag.textContent = checkbox.value
+  newTag.innerHTML = `${checkbox.value} <em class="fa-regular fa-circle-xmark"></em>`
   newTag.dataset.type = type
-  newTag.addEventListener('click', async () => {
+  newTag.dataset.tag_value = checkbox.value
+  newTag.querySelector('.fa-regular').addEventListener('click', async () => {
     newTag.parentNode.removeChild(newTag)
-    tags = tags.filter(tag => tag.type !== newTag.dataset.type && tag.name !== newTag.textContent)
+    tags = tags.filter(tag => tag.type !== newTag.dataset.type || tag.name !== newTag.dataset.tag_value)
     const newRecipes = searchBar.value.length >= 3 ? await sortMedias(searchBar.value) : await sortMedias('')
     displayRecipesData(newRecipes)
     initTags(newRecipes)
@@ -26,11 +31,13 @@ function createNewChosenTag (checkbox) {
   const chosenTagsArray = document.querySelectorAll('#chosen_tags > *')
   const type = checkbox.parentNode.parentNode.id
   let tagAlreadyExist = false
-  chosenTagsArray.forEach(tag => {
-    if (tag.textContent === checkbox.value && tag.dataset.type === type) {
-      tagAlreadyExist = true
+  if (chosenTagsArray.length !== 0) {
+    for (const i in chosenTagsArray) {
+      if (chosenTagsArray[i].dataset && chosenTagsArray[i].dataset.tag_value === checkbox.value && chosenTagsArray[i].dataset.type === type) {
+        tagAlreadyExist = true
+      }
     }
-  })
+  }
   if (!tagAlreadyExist) {
     const newTag = initNewChosenTag(checkbox, type)
     chosenTags.appendChild(newTag)
@@ -38,6 +45,108 @@ function createNewChosenTag (checkbox) {
   } else {
     alert('Tag already exist')
   }
+}
+
+function searchInIngredientTags (searchValue) {
+  const searchResults = []
+  for (const i in ingredientTags) {
+    if (ingredientTags[i].toLowerCase().includes(searchValue.toLowerCase())) {
+      searchResults.push(ingredientTags[i])
+    }
+  }
+  return searchResults
+}
+
+function initIngredientTagsSearch () {
+  const searchIngredients = document.getElementById('search_ingredients')
+  const ingredientsSelect = document.getElementById('ingredients')
+  const searchBar = document.getElementById('search_bar')
+  searchIngredients.addEventListener('input', () => {
+    const searchResult = searchInIngredientTags(searchIngredients.value)
+    ingredientsSelect.innerHTML = ''
+    for (const i in searchResult) {
+      ingredientsSelect.appendChild(createCheckbox(searchResult[i].toLowerCase(), searchResult[i]))
+    }
+
+    const checkboxes = document.querySelectorAll("#ingredients input[type='checkbox']")
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', async () => {
+        createNewChosenTag(checkbox)
+        const newRecipes = searchBar.value.length >= 3 ? await sortMedias(searchBar.value) : await sortMedias('')
+        displayRecipesData(newRecipes)
+        initTags(newRecipes)
+        searchIngredients.value = ''
+      })
+    })
+  })
+}
+
+function searchInApplianceTags (searchValue) {
+  const searchResults = []
+  for (const i in applianceTags) {
+    if (applianceTags[i].toLowerCase().includes(searchValue.toLowerCase())) {
+      searchResults.push(applianceTags[i])
+    }
+  }
+  return searchResults
+}
+
+function initApplianceTagsSearch () {
+  const searchAppliance = document.getElementById('search_appliance')
+  const applianceSelect = document.getElementById('appliance')
+  const searchBar = document.getElementById('search_bar')
+  searchAppliance.addEventListener('input', () => {
+    const searchResult = searchInApplianceTags(searchAppliance.value)
+    applianceSelect.innerHTML = ''
+    for (const i in searchResult) {
+      applianceSelect.appendChild(createCheckbox(searchResult[i].toLowerCase(), searchResult[i]))
+    }
+
+    const checkboxes = document.querySelectorAll("#appliance input[type='checkbox']")
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', async () => {
+        createNewChosenTag(checkbox)
+        const newRecipes = searchBar.value.length >= 3 ? await sortMedias(searchBar.value) : await sortMedias('')
+        displayRecipesData(newRecipes)
+        initTags(newRecipes)
+        searchAppliance.value = ''
+      })
+    })
+  })
+}
+
+function searchInUstensilTags (searchValue) {
+  const searchResults = []
+  for (const i in ustensilTags) {
+    if (ustensilTags[i].toLowerCase().includes(searchValue.toLowerCase())) {
+      searchResults.push(ustensilTags[i])
+    }
+  }
+  return searchResults
+}
+
+function initUstensilTagsSeach () {
+  const searchUstensils = document.getElementById('search_ustensils')
+  const ustensilsSelect = document.getElementById('ustensils')
+  const searchBar = document.getElementById('search_bar')
+  searchUstensils.addEventListener('input', () => {
+    const searchResult = searchInUstensilTags(searchUstensils.value)
+    ustensilsSelect.innerHTML = ''
+    for (const i in searchResult) {
+      ustensilsSelect.appendChild(createCheckbox(searchResult[i].toLowerCase(), searchResult[i]))
+    }
+
+    const checkboxes = document.querySelectorAll("#ustensils input[type='checkbox']")
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', async () => {
+        createNewChosenTag(checkbox)
+        const newRecipes = searchBar.value.length >= 3 ? await sortMedias(searchBar.value) : await sortMedias('')
+        displayRecipesData(newRecipes)
+        initTags(newRecipes)
+        searchUstensils.value = ''
+      })
+    })
+  })
 }
 
 function setIngredientTags (recipesData) {
@@ -51,8 +160,10 @@ function setIngredientTags (recipesData) {
       }
     })
   })
+  ingredientTags = []
   ingredientArray.forEach(ingredient => {
     ingredientSelect.appendChild(createCheckbox(ingredient.toLowerCase(), ingredient))
+    ingredientTags.push(ingredient)
   })
 }
 
@@ -65,8 +176,10 @@ function setApplianceTags (recipesData) {
       applianceArray.push(recipe.appliance)
     }
   })
+  applianceTags = []
   applianceArray.forEach(appliance => {
     applianceSelect.appendChild(createCheckbox(appliance.toLowerCase(), appliance))
+    applianceTags.push(appliance)
   })
 }
 
@@ -81,8 +194,10 @@ function setUstensilTags (recipesData) {
       }
     })
   })
+  ustensilTags = []
   ustensilsArray.forEach(ustensil => {
     ustensilSelect.appendChild(createCheckbox(ustensil.toLowerCase(), ustensil))
+    ustensilTags.push(ustensil)
   })
 }
 
@@ -104,6 +219,9 @@ function initTags (recipesData) {
       initTags(newRecipes)
     })
   })
+  initIngredientTagsSearch()
+  initApplianceTagsSearch()
+  initUstensilTagsSeach()
 }
 
 function initBaseListeners () {
@@ -126,11 +244,11 @@ function displayRecipesData (recipesData) {
 
 export async function retrieveRecipes () {
   const recipes = await (new Api()).getDatas()
-  return recipes.map(recipe => new RecipeFactory(recipe))
+  recipesData = recipes.map(recipe => new RecipeFactory(recipe))
 }
 
 async function init () {
-  const recipesData = await retrieveRecipes()
+  await retrieveRecipes()
   displayRecipesData(recipesData)
   initBaseListeners()
   initTags(recipesData)
