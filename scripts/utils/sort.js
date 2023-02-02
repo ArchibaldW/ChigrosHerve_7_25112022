@@ -24,7 +24,7 @@ function checkTagApplianceInRecipe (recipe) {
   let isInRecipe = true
   const chosenaAppliance = tags.filter(tag => tag.type === TAG_TYPES.appliance)
   chosenaAppliance.forEach(appliance => {
-    if (!(recipe.appliance === appliance.name)) {
+    if (recipe.appliance !== appliance.name) {
       isInRecipe = false
     }
   })
@@ -56,7 +56,7 @@ function searchInRecipe (recipe, searchValue) {
   return isRecipeValid && isSearchInIngredients
 }
 
-export async function sortMedias (searchValue) {
+export function sortMedias (searchValue) {
   return recipesData.filter(recipe => {
     return searchInRecipe(recipe, searchValue) &&
     checkTagIngredientsInRecipe(recipe) &&
