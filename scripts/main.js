@@ -18,9 +18,7 @@ function initNewChosenTag (checkbox, type) {
   newTag.dataset.tag_value = checkbox.value
   newTag.querySelector('.fa-regular').addEventListener('click', async () => {
     newTag.parentNode.removeChild(newTag)
-    console.log(tags)
     tags = tags.filter(tag => tag.type !== newTag.dataset.type || tag.name !== newTag.dataset.tag_value)
-    console.log(tags)
     const newRecipes = searchBar.value.length >= 3 ? await sortMedias(searchBar.value) : await sortMedias('')
     displayRecipesData(newRecipes)
     initTags(newRecipes)

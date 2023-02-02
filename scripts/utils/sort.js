@@ -9,7 +9,7 @@ const TAG_TYPES = {
   ustensils: 'ustensils'
 }
 
-function checkTagIngredientsInRecipe (recipe) {
+function checkTagIngredientsInRecipe(recipe) {
   const chosenIngredients = []
 
   for (const i in tags) {
@@ -33,7 +33,7 @@ function checkTagIngredientsInRecipe (recipe) {
   }
 }
 
-function checkTagApplianceInRecipe (recipe) {
+function checkTagApplianceInRecipe(recipe) {
   const chosenAppliance = []
 
   for (const i in tags) {
@@ -55,7 +55,7 @@ function checkTagApplianceInRecipe (recipe) {
   return false
 }
 
-function checkTagUstensilsInRecipe (recipe) {
+function checkTagUstensilsInRecipe(recipe) {
   const chosenUstensils = []
 
   for (const i in tags) {
@@ -79,7 +79,7 @@ function checkTagUstensilsInRecipe (recipe) {
   }
 }
 
-function searchInRecipe (recipe, searchValue) {
+function searchInRecipe(recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
 
@@ -97,7 +97,7 @@ function searchInRecipe (recipe, searchValue) {
   return isRecipeValid || isSearchInIngredients
 }
 
-export async function sortMedias (searchValue) {
+export async function sortMedias(searchValue) {
   const recipesArray = []
 
   for (const i in recipesData) {
