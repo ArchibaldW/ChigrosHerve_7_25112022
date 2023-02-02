@@ -6,6 +6,8 @@ export function createHtmlElement (type, text) {
 
 export function createCheckbox (name, text) {
   const element = document.createElement('div')
+  element.classList.add('tag')
+
   const input = document.createElement('input')
   input.setAttribute('type', 'checkbox')
   input.id = name

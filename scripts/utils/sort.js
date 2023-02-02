@@ -1,5 +1,5 @@
 import {
-  retrieveRecipes,
+  recipesData,
   tags
 } from '../main.js'
 
@@ -19,18 +19,18 @@ function checkTagIngredientsInRecipe (recipe) {
   }
 
   if (chosenIngredients.length !== 0) {
+    let foundUstensils = 0
     for (const i in chosenIngredients) {
       for (const j in recipe.ingredients) {
         if (recipe.ingredients[j].ingredient === chosenIngredients[i].name) {
-          return true
+          foundUstensils++
         }
       }
     }
+    return foundUstensils === chosenIngredients.length
   } else {
     return true
   }
-
-  return false
 }
 
 function checkTagApplianceInRecipe (recipe) {
@@ -65,41 +65,39 @@ function checkTagUstensilsInRecipe (recipe) {
   }
 
   if (chosenUstensils.length !== 0) {
+    let foundUstensils = 0
     for (const i in chosenUstensils) {
       for (const j in recipe.ustensils) {
         if (recipe.ustensils[j] === chosenUstensils[i].name) {
-          return true
+          foundUstensils++
         }
       }
     }
+    return foundUstensils === chosenUstensils.length
   } else {
     return true
   }
-
-  return false
 }
 
 function searchInRecipe (recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
 
-  if (recipe.name.includes(searchValue) || recipe.description.includes(searchValue)) {
+  if (recipe.name.toLowerCase().includes(searchValue.toLowerCase()) || recipe.description.toLowerCase().includes(searchValue.toLowerCase())) {
     isRecipeValid = true
   }
 
   for (const i in recipe.ingredients) {
-    if (recipe.ingredients[i].ingredient.includes(searchValue)) {
+    if (recipe.ingredients[i].ingredient.toLowerCase().includes(searchValue.toLowerCase())) {
       isSearchInIngredients = true
       break
     }
   }
 
-  return isRecipeValid && isSearchInIngredients
+  return isRecipeValid || isSearchInIngredients
 }
 
 export async function sortMedias (searchValue) {
-  const recipesData = await retrieveRecipes()
-
   const recipesArray = []
 
   for (const i in recipesData) {

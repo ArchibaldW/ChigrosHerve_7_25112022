@@ -3,6 +3,7 @@
 
 <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <meta charset="utf-8">
     <title>Les petits plats</title>
 </head>
@@ -12,25 +13,61 @@
         <img src="assets/medias/logo.png" />
     </header>
     <main>
-        <input type="text" id="search_bar" name="search_bar" />
-        <div id="chosen_tags"></div>
-        <div id="tags" class="flex">
-            <div>
-                <input type="text" id="search_ingredients" name="search_ingredients" />
-                <div id="ingredients"></div>
-            </div>
-            <div>
-                <input type="text" id="search_appliance" name="search_appliance" />
-                <div id="appliance"></div>
-            </div>
-            <div>
-                <input type="text" id="search_ustensils" name="search_ustensils" />
-                <div id="ustensils"></div>
+        <div id="search_block">
+            <input type="text" id="search_bar" placeholder="Rechercher une recette" name="search_bar" />
+            <em class="fa-solid fa-search"></em>
+        </div>
+        <div id="tags_block">
+            <div id="chosen_tags"></div>
+            <div id="tags" class="flex">
+                <div id="ingredients_dropdown">
+                    <button onclick="dropdownIngredients()" class="dropbtn show">
+                        Ingredients
+                        <em class="fa-solid fa-chevron-down"></em>
+                    </button>
+                    <div id="ingredients_dropdown_content">
+                        <div class="search_header">
+                            <input type="text" id="search_ingredients" class="search_tags" placeholder="Rechercher un ingrédient" name="search_ingredients" />
+                            <em class="fa-solid fa-chevron-up"></em>
+                        </div>
+                        <div id="ingredients"></div>
+                    </div>
+                </div>
+
+                <div id="appliance_dropdown">
+                    <button onclick="dropdownAppliance()" class="dropbtn show">
+                        Appliance
+                        <em class="fa-solid fa-chevron-down"></em>
+                    </button>
+                    <div id="appliance_dropdown_content">
+                        <div class="search_header">
+                            <input type="text" id="search_appliance" class="search_tags"
+                                placeholder="Rechercher un appareil" name="search_appliance" />
+                            <em class="fa-solid fa-chevron-up"></em>
+                        </div>
+                        <div id="appliance"></div>
+                    </div>
+                </div>
+
+                <div id="ustensils_dropdown">
+                    <button onclick="dropdownUstensils()" class="dropbtn show">
+                        Ustensils
+                        <em class="fa-solid fa-chevron-down"></em>
+                    </button>
+                    <div id="ustensils_dropdown_content">
+                        <div class="search_header">
+                            <input type="text" id="search_ustensils" class="search_tags" placeholder="Rechercher un ustensile" name="search_ustensils" />
+                            <em class="fa-solid fa-chevron-up"></em>
+                        </div>
+                        <div id="ustensils"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="recipes_section"></div>
     </main>
     <script src="https://kit.fontawesome.com/942ceaea95.js" crossorigin="anonymous"></script>
+    <script src="scripts/utils/dropdown.js"></script>
     <script src="scripts/main.js" type="module"></script>
 </body>
 
