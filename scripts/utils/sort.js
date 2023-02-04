@@ -9,41 +9,54 @@ const TAG_TYPES = {
   ustensils: 'ustensils'
 }
 
-function checkTagIngredientsInRecipe(recipe) {
+/**
+ * Return if the recipe contain all ingredients in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
+function checkTagIngredientsInRecipe (recipe) {
   const chosenIngredients = []
+  let isInRecipe = true
 
-  for (const i in tags) {
+  for (let i = 0; i < tags.length; i++) {
     if (tags[i].type === TAG_TYPES.ingredients) {
       chosenIngredients.push(tags[i])
     }
   }
 
   if (chosenIngredients.length !== 0) {
-    let foundUstensils = 0
-    for (const i in chosenIngredients) {
-      for (const j in recipe.ingredients) {
+    for (let i = 0; i < chosenIngredients.length; i++) {
+      let ingredientFound = false
+      for (let j = 0; j < recipe.ingredients.length; j++) {
         if (recipe.ingredients[j].ingredient === chosenIngredients[i].name) {
-          foundUstensils++
+          ingredientFound = true
         }
       }
+      if (!ingredientFound) {
+        isInRecipe = false
+        break
+      }
     }
-    return foundUstensils === chosenIngredients.length
-  } else {
-    return true
   }
+  return isInRecipe
 }
 
-function checkTagApplianceInRecipe(recipe) {
+/**
+ * Return if the recipe contain all appliances in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
+function checkTagApplianceInRecipe (recipe) {
   const chosenAppliance = []
 
-  for (const i in tags) {
+  for (let i = 0; i < tags.length; i++) {
     if (tags[i].type === TAG_TYPES.appliance) {
       chosenAppliance.push(tags[i])
     }
   }
 
   if (chosenAppliance.length !== 0) {
-    for (const i in chosenAppliance) {
+    for (let i = 0; i < chosenAppliance.length; i++) {
       if (recipe.appliance === chosenAppliance[i].name) {
         return true
       }
@@ -55,31 +68,45 @@ function checkTagApplianceInRecipe(recipe) {
   return false
 }
 
-function checkTagUstensilsInRecipe(recipe) {
+/**
+ * Return if the recipe contain all ustensils in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
+function checkTagUstensilsInRecipe (recipe) {
   const chosenUstensils = []
+  let isInRecipe = true
 
-  for (const i in tags) {
+  for (let i = 0; i < tags.length; i++) {
     if (tags[i].type === TAG_TYPES.ustensils) {
       chosenUstensils.push(tags[i])
     }
   }
 
   if (chosenUstensils.length !== 0) {
-    let foundUstensils = 0
-    for (const i in chosenUstensils) {
-      for (const j in recipe.ustensils) {
+    for (let i = 0; i < chosenUstensils.length; i++) {
+      let ustensilsFound = false
+      for (let j = 0; j < recipe.ustensils.length; j++) {
         if (recipe.ustensils[j] === chosenUstensils[i].name) {
-          foundUstensils++
+          ustensilsFound = true
         }
       }
+      if (!ustensilsFound) {
+        isInRecipe = false
+        break
+      }
     }
-    return foundUstensils === chosenUstensils.length
-  } else {
-    return true
   }
+  return isInRecipe
 }
 
-function searchInRecipe(recipe, searchValue) {
+/**
+ * Return if the search value is in title, description or ingredient
+ * @param {Recipe} recipe
+ * @param {string} searchValue
+ * @return {boolean}
+ */
+function searchInRecipe (recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
 
@@ -87,7 +114,7 @@ function searchInRecipe(recipe, searchValue) {
     isRecipeValid = true
   }
 
-  for (const i in recipe.ingredients) {
+  for (let i = 0; i < recipe.ingredients.length; i++) {
     if (recipe.ingredients[i].ingredient.toLowerCase().includes(searchValue.toLowerCase())) {
       isSearchInIngredients = true
       break
@@ -97,10 +124,15 @@ function searchInRecipe(recipe, searchValue) {
   return isRecipeValid || isSearchInIngredients
 }
 
-export function sortMedias(searchValue) {
+/**
+ * Return all valid recipes from search value and tags
+ * @param {string} searchValue
+ * @return {Array<Recipe>}
+ */
+export function sortMedias (searchValue) {
   const recipesArray = []
 
-  for (const i in recipesData) {
+  for (let i = 0; i < recipesData.length; i++) {
     if (searchInRecipe(recipesData[i], searchValue) &&
       checkTagIngredientsInRecipe(recipesData[i]) &&
       checkTagApplianceInRecipe(recipesData[i]) &&

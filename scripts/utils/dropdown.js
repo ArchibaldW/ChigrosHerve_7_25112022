@@ -1,53 +1,56 @@
 /* eslint-disable no-unused-vars */
-function openIngredients() {
+function openIngredients () {
   document.getElementById('ingredients_dropdown_content').classList.add('show')
   document.querySelector('#ingredients_dropdown .dropbtn').classList.remove('show')
 }
 
-function closeIngredients() {
+function closeIngredients () {
   document.getElementById('ingredients_dropdown_content').classList.remove('show')
   document.querySelector('#ingredients_dropdown .dropbtn').classList.add('show')
 }
 
-function openAppliance() {
+function openAppliance () {
   document.getElementById('appliance_dropdown_content').classList.add('show')
   document.querySelector('#appliance_dropdown .dropbtn').classList.remove('show')
 }
 
-function closeAppliance() {
+function closeAppliance () {
   document.getElementById('appliance_dropdown_content').classList.remove('show')
   document.querySelector('#appliance_dropdown .dropbtn').classList.add('show')
 }
 
-function openUstensils() {
+function openUstensils () {
   document.getElementById('ustensils_dropdown_content').classList.add('show')
   document.querySelector('#ustensils_dropdown .dropbtn').classList.remove('show')
 }
 
-function closeUstensils() {
+function closeUstensils () {
   document.getElementById('ustensils_dropdown_content').classList.remove('show')
   document.querySelector('#ustensils_dropdown .dropbtn').classList.add('show')
 }
 
-
-function dropdownIngredients() {
+function dropdownIngredients () {
   openIngredients()
   closeAppliance()
   closeUstensils()
 }
 
-function dropdownAppliance() {
+function dropdownAppliance () {
   openAppliance()
   closeIngredients()
   closeUstensils()
 }
 
-function dropdownUstensils() {
+function dropdownUstensils () {
   openUstensils()
   closeIngredients()
   closeAppliance()
 }
 
+/**
+ * Close the dropdowns in given conditions
+ * @param {any} event
+ */
 window.onclick = function (event) {
   const ingredientsDropdown = document.getElementById('ingredients_dropdown_content')
   const applianceDropdown = document.getElementById('appliance_dropdown_content')
