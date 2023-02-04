@@ -9,6 +9,11 @@ const TAG_TYPES = {
   ustensils: 'ustensils'
 }
 
+/**
+ * Return if the recipe contain all ingredients in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
 function checkTagIngredientsInRecipe (recipe) {
   let isInRecipe = true
   const chosenIngredients = tags.filter(tag => tag.type === TAG_TYPES.ingredients)
@@ -20,6 +25,11 @@ function checkTagIngredientsInRecipe (recipe) {
   return isInRecipe
 }
 
+/**
+ * Return if the recipe contain all appliances in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
 function checkTagApplianceInRecipe (recipe) {
   let isInRecipe = true
   const chosenaAppliance = tags.filter(tag => tag.type === TAG_TYPES.appliance)
@@ -31,6 +41,11 @@ function checkTagApplianceInRecipe (recipe) {
   return isInRecipe
 }
 
+/**
+ * Return if the recipe contain all ustensils in tags
+ * @param {Recipe} recipe
+ * @return {boolean}
+ */
 function checkTagUstensilsInRecipe (recipe) {
   let isInRecipe = true
   const chosenUstensils = tags.filter(tag => tag.type === TAG_TYPES.ustensils)
@@ -42,6 +57,12 @@ function checkTagUstensilsInRecipe (recipe) {
   return isInRecipe
 }
 
+/**
+ * Return if the search value is in title, description or ingredient
+ * @param {Recipe} recipe
+ * @param {string} searchValue
+ * @return {boolean}
+ */
 function searchInRecipe (recipe, searchValue) {
   let isRecipeValid = false
   let isSearchInIngredients = false
@@ -56,6 +77,11 @@ function searchInRecipe (recipe, searchValue) {
   return isRecipeValid && isSearchInIngredients
 }
 
+/**
+ * Return all valid recipes from search value and tags
+ * @param {string} searchValue
+ * @return {Array<Recipe>}
+ */
 export function sortMedias (searchValue) {
   return recipesData.filter(recipe => {
     return searchInRecipe(recipe, searchValue) &&

@@ -29,7 +29,6 @@ function closeUstensils() {
   document.querySelector('#ustensils_dropdown .dropbtn').classList.add('show')
 }
 
-
 function dropdownIngredients() {
   openIngredients()
   closeAppliance()
@@ -48,6 +47,10 @@ function dropdownUstensils() {
   closeAppliance()
 }
 
+/**
+ * Close the dropdowns in given conditions
+ * @param {any} event
+ */
 window.onclick = function (event) {
   const ingredientsDropdown = document.getElementById('ingredients_dropdown_content')
   const applianceDropdown = document.getElementById('appliance_dropdown_content')

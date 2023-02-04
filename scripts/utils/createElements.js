@@ -1,9 +1,21 @@
+/**
+ * Create a new HTML Element given a type
+ * @param {string} type
+ * @param {string} text
+ * @return {any}
+ */
 export function createHtmlElement (type, text) {
   const element = document.createElement(type)
   element.textContent = text
   return element
 }
 
+/**
+ * Create a new tag checkbox
+ * @param {string} name
+ * @param {string} text
+ * @return {any}
+ */
 export function createCheckbox (name, text) {
   const element = document.createElement('div')
   element.classList.add('tag')

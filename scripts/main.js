@@ -10,6 +10,12 @@ export let applianceTags = []
 export let ustensilTags = []
 export let recipesData = []
 
+/**
+ * Init a new chosen tag
+ * @param {any} checkbox
+ * @param {string} type
+ * @return {any}
+ */
 function initNewChosenTag (checkbox, type) {
   const searchBar = document.getElementById('search_bar')
   const newTag = createHtmlElement('button', checkbox.value)
@@ -26,6 +32,10 @@ function initNewChosenTag (checkbox, type) {
   return newTag
 }
 
+/**
+ * Create a new tag in chosen_tags
+ * @param {any} checkbox
+ */
 function createNewChosenTag (checkbox) {
   const chosenTags = document.getElementById('chosen_tags')
   const chosenTagsArray = document.querySelectorAll('#chosen_tags > *')
@@ -47,6 +57,9 @@ function createNewChosenTag (checkbox) {
   }
 }
 
+/**
+ * Search all ingredients tags given the search value
+ */
 function searchInIngredientTags (searchValue) {
   const searchResults = []
   for (const i in ingredientTags) {
@@ -57,6 +70,9 @@ function searchInIngredientTags (searchValue) {
   return searchResults
 }
 
+/**
+ * Init the search bar for ingredients tags
+ */
 function initIngredientTagsSearch () {
   const searchIngredients = document.getElementById('search_ingredients')
   const ingredientsSelect = document.getElementById('ingredients')
@@ -81,6 +97,9 @@ function initIngredientTagsSearch () {
   })
 }
 
+/**
+ * Search all appliances tags given the search value
+ */
 function searchInApplianceTags (searchValue) {
   const searchResults = []
   for (const i in applianceTags) {
@@ -91,6 +110,9 @@ function searchInApplianceTags (searchValue) {
   return searchResults
 }
 
+/**
+ * Init the search bar for appliances tags
+ */
 function initApplianceTagsSearch () {
   const searchAppliance = document.getElementById('search_appliance')
   const applianceSelect = document.getElementById('appliance')
@@ -115,6 +137,9 @@ function initApplianceTagsSearch () {
   })
 }
 
+/**
+ * Search all ustensils tags given the search value
+ */
 function searchInUstensilTags (searchValue) {
   const searchResults = []
   for (const i in ustensilTags) {
@@ -125,6 +150,9 @@ function searchInUstensilTags (searchValue) {
   return searchResults
 }
 
+/**
+ * Init the search bar for ustensils tags
+ */
 function initUstensilTagsSeach () {
   const searchUstensils = document.getElementById('search_ustensils')
   const ustensilsSelect = document.getElementById('ustensils')
@@ -149,6 +177,10 @@ function initUstensilTagsSeach () {
   })
 }
 
+/**
+ * Set ingredients tags, given a Recipe's Array
+ * @param {Array<Recipe>} recipesData
+ */
 function setIngredientTags (recipesData) {
   const ingredientSelect = document.getElementById('ingredients')
   ingredientSelect.innerHTML = ''
@@ -167,6 +199,10 @@ function setIngredientTags (recipesData) {
   })
 }
 
+/**
+ * Set appliances tags, given a Recipe's Array
+ * @param {Array<Recipe>} recipesData
+ */
 function setApplianceTags (recipesData) {
   const applianceSelect = document.getElementById('appliance')
   applianceSelect.innerHTML = ''
@@ -183,6 +219,10 @@ function setApplianceTags (recipesData) {
   })
 }
 
+/**
+ * Set ustensils tags, given a Recipe's Array
+ * @param {Array<Recipe>} recipesData
+ */
 function setUstensilTags (recipesData) {
   const ustensilSelect = document.getElementById('ustensils')
   ustensilSelect.innerHTML = ''
@@ -201,12 +241,20 @@ function setUstensilTags (recipesData) {
   })
 }
 
+/**
+ * Set all tags for a given Recipe's Array
+ * @param {Array<Recipe>} recipesData
+ */
 function setRecipeTags (recipesData) {
   setIngredientTags(recipesData)
   setApplianceTags(recipesData)
   setUstensilTags(recipesData)
 }
 
+/**
+ * Init all tags + listeners and tag search
+ * @param {Array<Recipe>} recipesData
+ */
 function initTags (recipesData) {
   setRecipeTags(recipesData)
   const searchBar = document.getElementById('search_bar')
@@ -224,6 +272,9 @@ function initTags (recipesData) {
   initUstensilTagsSeach()
 }
 
+/**
+ * Init the search bar base listener
+ */
 function initBaseListeners () {
   const searchBar = document.getElementById('search_bar')
   searchBar.addEventListener('input', async () => {
@@ -233,6 +284,10 @@ function initBaseListeners () {
   })
 }
 
+/**
+ * Display all recipes given a Recipe's Array
+ * @param {Array<Recipe>} recipesData
+ */
 function displayRecipesData (recipesData) {
   const recipesSection = document.getElementById('recipes_section')
   recipesSection.innerHTML = ''
@@ -242,11 +297,17 @@ function displayRecipesData (recipesData) {
   })
 }
 
+/**
+ * Get all recipes drom JSON and use the Factory
+ */
 export async function retrieveRecipes () {
   const recipes = await (new Api()).getDatas()
   recipesData = recipes.map(recipe => new RecipeFactory(recipe))
 }
 
+/**
+ * Init recipes, listeners and tags
+ */
 async function init () {
   await retrieveRecipes()
   displayRecipesData(recipesData)
