@@ -5,6 +5,12 @@
     gap : 50px
 }
 
+#recipes_section .no_recipes{
+    font-weight: 600;
+    font-size: 22px;
+    justify-self: center;
+}
+
 .recipe_card{
     width: 30%;
 }

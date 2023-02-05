@@ -291,10 +291,14 @@ function initBaseListeners () {
 function displayRecipesData (recipesData) {
   const recipesSection = document.getElementById('recipes_section')
   recipesSection.innerHTML = ''
-  recipesData.forEach(recipe => {
-    const template = new RecipeCard(recipe)
-    recipesSection.appendChild(template.createRecipeCard())
-  })
+  if (recipesData.length !== 0) {
+    recipesData.forEach(recipe => {
+      const template = new RecipeCard(recipe)
+      recipesSection.appendChild(template.createRecipeCard())
+    })
+  } else {
+    recipesSection.innerHTML = '<div class="no_recipes"> « Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc. </div> '
+  }
 }
 
 /**
